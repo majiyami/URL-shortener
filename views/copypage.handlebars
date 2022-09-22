@@ -1,0 +1,15 @@
+<h4>Success! Please use this link:</h4>
+<p id="copy">{{shortUrl}}</p>
+<button type="button" id="copybutton" class="btn btn-outline-secondary">copy</button>
+
+<script>
+  const copybutton = document.querySelector('#copybutton')
+  copybutton.addEventListener('click', () => {
+    const copy = document.querySelector('#copy')
+    navigator.clipboard.writeText(copy.innerText)
+      .then(() => {
+        alert('複製成功')
+      })
+  })
+
+</script>
