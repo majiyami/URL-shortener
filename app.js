@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
- return res.render('index')
+  return res.render('index')
 })
 
 app.post('/', (req, res) => {
@@ -36,7 +36,8 @@ app.post('/', (req, res) => {
     .then(() => {
       res.render('copypage', {
         //localhost:3000/+shortURL
-        shortUrl: req.headers.host + '/' + shortUrl})
+        shortUrl: req.headers.host + '/' + shortUrl
+      })
     })
 
     .catch(error => console.log(error))
@@ -46,7 +47,12 @@ app.post('/', (req, res) => {
 app.get('/:shortURL', (req, res) => {
   URLdata.findOne({ shortURL: req.params.shortURL })
     .lean()
-    .then(url => res.redirect(url.inputURL))
+    .then(url => {
+      if (url) {
+        return res.redirect(url.inputURL)
+      }
+    })
+    .catch(error => console.log(error))
 })
 
 function shortURLGenerator() {
